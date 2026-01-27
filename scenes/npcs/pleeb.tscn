@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://bovnhfpd1njj5"]
+
+[ext_resource type="Script" uid="uid://d1hrbdavc10di" path="res://scripts/npcs/pleeb.gd" id="1_5wd1e"]
+[ext_resource type="Texture2D" uid="uid://nj0xhvurxjis" path="res://assets/art/characters/npcs-spritesheet.png" id="2_uiqyk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvnmh"]
+atlas = ExtResource("2_uiqyk")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ag4ki"]
+atlas = ExtResource("2_uiqyk")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_agqbq"]
+atlas = ExtResource("2_uiqyk")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_onnuu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvnmh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ag4ki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agqbq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vgeay"]
+radius = 16.0
+height = 32.0
+
+[node name="Pleeb" type="CharacterBody2D"]
+script = ExtResource("1_5wd1e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_onnuu")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, 48)
+shape = SubResource("CapsuleShape2D_vgeay")

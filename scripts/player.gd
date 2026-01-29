@@ -4,8 +4,9 @@ const SPEED = 350.0 # Base horizontal movement speed
 const ACCELERATION = 1200.0 # Base acceleration
 const FRICTION = 1400.0 # Base friction
 const GRAVITY = 2000.0 # Gravity when moving upwards
-const FALL_GRAVITY = 3000.0 # Gravity when falling downwards
+const FALL_GRAVITY = 2500.0 # Gravity when falling downwards
 const WALL_GRAVITY = 25.0 # Gravity while sliding on a wall
+const MAX_FALL_VELOCITY = 4000.0
 const JUMP_VELOCITY = -700.0 # Maximum jump strength
 const LEAP_X_VELOCITY = 600.0
 const LEAP_Y_VELOCITY = -400.0
@@ -45,7 +46,6 @@ func _ready() -> void:
 	coyote_timer.one_shot = true
 	add_child(coyote_timer)
 	coyote_timer.timeout.connect(coyote_timeout)
-	
 	
 	animated_sprite.animation_finished.connect(_on_anim_finished)
 
@@ -90,12 +90,14 @@ func _physics_process(delta) -> void:
 		has_leap = true
 		is_leaping = false
 		
-		# play land animation
 	else:
 		if coyote_jump_available:
 			if coyote_timer.is_stopped():
 				coyote_timer.start()
-		velocity.y += custom_get_gravity(horizontal_input) * delta
+		if velocity.y < MAX_FALL_VELOCITY:
+			velocity.y += custom_get_gravity(horizontal_input) * delta
+		else:
+			velocity.y = MAX_FALL_VELOCITY
 
 	# Handle horizontal motion and friction
 	var floor_damping := 1.0 if is_on_floor() else 0.2 # Set floor damping, friction is less when in air
@@ -161,7 +163,6 @@ func play_one_shot(anim_name: String) -> void:
 	anim_lock = true
 	locked_anim = anim_name
 	animated_sprite.play(anim_name)
-
 
 
 ## Reset coyote jump

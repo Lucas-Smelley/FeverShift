@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cyh4a3652g1o6"]
+[gd_scene format=3 uid="uid://cyh4a3652g1o6"]
 
 [ext_resource type="Script" uid="uid://bimch3fn1we7i" path="res://scripts/npcs/blueford.gd" id="1_3mqhd"]
 [ext_resource type="Texture2D" uid="uid://nj0xhvurxjis" path="res://assets/art/characters/npcs-spritesheet.png" id="2_5nkw8"]
@@ -85,14 +85,15 @@ animations = [{
 radius = 18.0
 height = 98.0
 
-[node name="Blueford" type="CharacterBody2D"]
+[node name="Blueford" type="CharacterBody2D" unique_id=1378613578]
+collision_layer = 8
 script = ExtResource("1_3mqhd")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=313412610]
 sprite_frames = SubResource("SpriteFrames_xulsd")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2108289626]
 position = Vector2(-7, 15)
 shape = SubResource("CapsuleShape2D_hkgkp")

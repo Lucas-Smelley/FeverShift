@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://gleaqce0jfty"]
+[gd_scene format=3 uid="uid://gleaqce0jfty"]
 
 [ext_resource type="Script" uid="uid://dyxcct1ib6b56" path="res://scripts/npcs/aquafore.gd" id="1_l7xo1"]
 [ext_resource type="Texture2D" uid="uid://nj0xhvurxjis" path="res://assets/art/characters/npcs-spritesheet.png" id="2_trfn1"]
@@ -29,14 +29,15 @@ animations = [{
 radius = 11.0
 height = 40.0
 
-[node name="Aquafore" type="CharacterBody2D"]
+[node name="Aquafore" type="CharacterBody2D" unique_id=1071166632]
+collision_layer = 8
 script = ExtResource("1_l7xo1")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=839702256]
 sprite_frames = SubResource("SpriteFrames_tqr6r")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1482733173]
 position = Vector2(3, 44)
 shape = SubResource("CapsuleShape2D_6sq3a")

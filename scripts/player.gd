@@ -23,6 +23,11 @@ var has_leap := true
 var is_leaping := false
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var interact_area: Area2D = $InteractArea
+
+var nearby_interactables: Array = []
+var current_interactable: Node = null
+
 
 var was_on_floor := false
 var was_on_wall := false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://43esvlsq0l0w"]
+[gd_scene format=3 uid="uid://43esvlsq0l0w"]
 
 [ext_resource type="Script" uid="uid://gdelhw57g8sd" path="res://scripts/npcs/clumbo.gd" id="1_hav40"]
 [ext_resource type="Texture2D" uid="uid://nj0xhvurxjis" path="res://assets/art/characters/npcs-spritesheet.png" id="2_jdubv"]
@@ -71,14 +71,15 @@ animations = [{
 radius = 15.0
 height = 82.0
 
-[node name="Clumbo" type="CharacterBody2D"]
+[node name="Clumbo" type="CharacterBody2D" unique_id=216527745]
+collision_layer = 8
 script = ExtResource("1_hav40")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=8270590]
 sprite_frames = SubResource("SpriteFrames_wk0me")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1005074233]
 position = Vector2(-2, 22)
 shape = SubResource("CapsuleShape2D_vvc3h")

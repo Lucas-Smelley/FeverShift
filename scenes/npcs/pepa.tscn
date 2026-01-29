@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c454m70fejy1r"]
+[gd_scene format=3 uid="uid://c454m70fejy1r"]
 
 [ext_resource type="Script" uid="uid://f18bsdls7wv" path="res://scripts/npcs/pepa.gd" id="1_do6u6"]
 [ext_resource type="Texture2D" uid="uid://nj0xhvurxjis" path="res://assets/art/characters/npcs-spritesheet.png" id="2_234bv"]
@@ -35,14 +35,15 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mahkh"]
 height = 52.0
 
-[node name="Pepa" type="CharacterBody2D"]
+[node name="Pepa" type="CharacterBody2D" unique_id=1599209833]
+collision_layer = 8
 script = ExtResource("1_do6u6")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1552290044]
 sprite_frames = SubResource("SpriteFrames_lwg0y")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2121074211]
 position = Vector2(1, 38)
 shape = SubResource("CapsuleShape2D_mahkh")

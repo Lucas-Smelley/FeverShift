@@ -36,6 +36,7 @@ animations = [{
 height = 52.0
 
 [node name="Pepa" type="CharacterBody2D" unique_id=1599209833]
+z_index = 10
 collision_layer = 8
 script = ExtResource("1_do6u6")
 

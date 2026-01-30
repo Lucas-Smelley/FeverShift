@@ -72,6 +72,7 @@ radius = 15.0
 height = 82.0
 
 [node name="Clumbo" type="CharacterBody2D" unique_id=216527745]
+z_index = 10
 collision_layer = 8
 script = ExtResource("1_hav40")
 

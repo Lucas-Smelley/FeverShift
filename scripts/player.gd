@@ -67,7 +67,6 @@ func start_npc_focus(npc: Node2D) -> void:
 	
 func end_npc_interaction() -> void:
 	is_interacting_with = null
-	print('player end')
 	camera.clear_focus()
 	
 func _on_interact_body_entered(body: Node) -> void:

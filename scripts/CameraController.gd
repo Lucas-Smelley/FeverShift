@@ -5,7 +5,7 @@ var focus_target: Node2D = null
 
 @export var talk_zoom := Vector2(2, 2)
 @export var normal_zoom := Vector2(1, 1)
-@export var focus_time := 0.25
+@export var focus_time := 0.5
 
 var cam_tween: Tween
 var is_tweening := false
@@ -19,8 +19,9 @@ func focus_on(target: Node2D) -> void:
 	_start_focus_tween(target.global_position, talk_zoom)
 	
 func clear_focus() -> void:
+	is_tweening = false
 	focus_target = player
-	_start_focus_tween(player.global_position, normal_zoom)
+	_start_zoom_tween(normal_zoom)
 	
 func _start_focus_tween(target_pos: Vector2, target_zoom: Vector2) -> void:
 	is_tweening = true
@@ -38,6 +39,17 @@ func _start_focus_tween(target_pos: Vector2, target_zoom: Vector2) -> void:
 	cam_tween.finished.connect(func():
 		is_tweening = false
 	)
+	
+func _start_zoom_tween(target_zoom: Vector2) -> void:
+	if cam_tween and cam_tween.is_running():
+		cam_tween.kill()
+
+	cam_tween = create_tween()
+	cam_tween.set_trans(Tween.TRANS_SINE)
+	cam_tween.set_ease(Tween.EASE_OUT)
+
+	cam_tween.tween_property(self, "zoom", target_zoom, focus_time)
+
 	
 func _process(delta: float) -> void:
 	if focus_target == null:

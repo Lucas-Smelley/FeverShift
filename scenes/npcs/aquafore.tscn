@@ -30,6 +30,7 @@ radius = 11.0
 height = 40.0
 
 [node name="Aquafore" type="CharacterBody2D" unique_id=1071166632]
+z_index = 10
 collision_layer = 8
 script = ExtResource("1_l7xo1")
 

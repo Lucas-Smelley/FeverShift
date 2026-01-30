@@ -6,3 +6,10 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	move_and_slide()
+	
+func can_interact(player) -> bool:
+	return true
+	
+func interact(player) -> void:
+	player.start_npc_focus(self)
+		

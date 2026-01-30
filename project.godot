@@ -25,6 +25,13 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="viewport"
 
+[global_group]
+
+interactable=""
+player=""
+camera=""
+npc=""
+
 [input]
 
 move_right={

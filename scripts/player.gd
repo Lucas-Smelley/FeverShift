@@ -23,11 +23,11 @@ var has_leap := true
 var is_leaping := false
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var interact_area: Area2D = $InteractArea
+@onready var interact_area: Area2D = $Area2D
 
+var interact_offset_x := 24.0
 var nearby_interactables: Array = []
 var current_interactable: Node = null
-
 
 var was_on_floor := false
 var was_on_wall := false
@@ -36,6 +36,9 @@ var anim_lock := false
 var locked_anim := ""
 
 var did_wall_jump := false
+
+var is_interacting_with = null
+@onready var camera := get_parent().get_node("Camera2D")
 
 
 func _ready() -> void:
@@ -52,7 +55,47 @@ func _ready() -> void:
 	add_child(coyote_timer)
 	coyote_timer.timeout.connect(coyote_timeout)
 	
+	interact_area.body_entered.connect(_on_interact_body_entered)
+	interact_area.body_exited.connect(_on_interact_body_exited)
+	
 	animated_sprite.animation_finished.connect(_on_anim_finished)
+	
+	
+func start_npc_focus(npc: Node2D) -> void:
+	is_interacting_with = npc
+	camera.focus_on(npc)
+	
+func end_npc_interaction() -> void:
+	is_interacting_with = null
+	print('player end')
+	camera.clear_focus()
+	
+func _on_interact_body_entered(body: Node) -> void:
+	if body.is_in_group("interactable") and body.has_method("interact"):
+		nearby_interactables.append(body)
+	
+func _on_interact_body_exited(body: Node) -> void:
+	if body == is_interacting_with:
+		end_npc_interaction()
+	nearby_interactables.erase(body)
+	
+func get_best_interactable() -> Node:
+	var best: Node = null
+	var best_dist := INF
+		
+	for obj in nearby_interactables:
+		if not is_instance_valid(obj):
+			continue
+		if obj.has_method("can_interact") and not obj.can_interact(self):
+			continue
+		
+		var d := global_position.distance_to(obj.global_position)
+		if d < best_dist:
+			best_dist = d
+			best = obj
+	
+	return best
+
 
 func _physics_process(delta) -> void:
 	
@@ -115,6 +158,11 @@ func _physics_process(delta) -> void:
 	move_and_slide()
 	
 	_update_animation(horizontal_input)
+	
+	if Input.is_action_just_pressed("interact"):
+		var target := get_best_interactable()
+		if target:
+			target.interact(self)
 
 ## Returns the gravity based on the state of the player
 func custom_get_gravity(input_dir : float = 0) -> float:
@@ -127,8 +175,10 @@ func _update_animation(horizontal_input: float) -> void:
 	
 	if horizontal_input > 0:
 		animated_sprite.flip_h = false
+		interact_area.position.x = interact_offset_x
 	elif horizontal_input < 0:
 		animated_sprite.flip_h = true
+		interact_area.position.x = interact_offset_x * -1
 		
 	if did_wall_jump:
 		did_wall_jump = false

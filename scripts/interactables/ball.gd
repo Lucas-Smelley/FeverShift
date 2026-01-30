@@ -1,7 +1,7 @@
 extends RigidBody2D
 
-var kick_force = 900.0
-var upward_force = 200.0
+var kick_force = 500.0
+var upward_force = 300.0
 
 func can_interact(player) -> bool:
 	return true

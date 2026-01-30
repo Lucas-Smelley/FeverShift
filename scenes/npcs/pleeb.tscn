@@ -36,7 +36,7 @@ animations = [{
 radius = 16.0
 height = 32.0
 
-[node name="Pleeb" type="CharacterBody2D" unique_id=628910041]
+[node name="Pleeb" type="CharacterBody2D" unique_id=628910041 groups=["interactable", "npc"]]
 collision_layer = 8
 script = ExtResource("1_5wd1e")
 

@@ -85,7 +85,7 @@ animations = [{
 radius = 18.0
 height = 98.0
 
-[node name="Blueford" type="CharacterBody2D" unique_id=1378613578]
+[node name="Blueford" type="CharacterBody2D" unique_id=1378613578 groups=["interactable", "npc"]]
 collision_layer = 8
 script = ExtResource("1_3mqhd")
 

@@ -42,4 +42,6 @@ func _start_focus_tween(target_pos: Vector2, target_zoom: Vector2) -> void:
 func _process(delta: float) -> void:
 	if focus_target == null:
 		return
+	if is_tweening:
+		return
 	global_position = focus_target.global_position

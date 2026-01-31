@@ -1,43 +1,65 @@
 extends CharacterBody2D
 
+###################################
+# SIDE TO SIDE MOVEMENT VARIABLES #
+###################################
 const SPEED = 350.0 # Base horizontal movement speed
 const ACCELERATION = 1200.0 # Base acceleration
 const FRICTION = 1400.0 # Base friction
+
+#################################
+# GRAVITY AND FALLING VARIABLES #
+#################################
 const GRAVITY = 2000.0 # Gravity when moving upwards
 const FALL_GRAVITY = 2500.0 # Gravity when falling downwards
 const WALL_GRAVITY = 25.0 # Gravity while sliding on a wall
 const MAX_FALL_VELOCITY = 4000.0
+
+#####################
+# JUMPING VARIABLES #
+#####################
 const JUMP_VELOCITY = -700.0 # Maximum jump strength
-const LEAP_X_VELOCITY = 600.0
-const LEAP_Y_VELOCITY = -400.0
 const WALL_JUMP_VELOCITY = -700.0 # Maximum wall jump strength
 const WALL_JUMP_PUSHBACK = 400.0 # Horizontal push strength off walls
+
+##############################
+# INPUT ASSISTANCE VARIABLES #
+##############################
 const INPUT_BUFFER_PATIENCE = 0.1 # Input queue patience time
 const COYOTE_TIME = 0.08 # Coyote patience time
-
 var input_buffer : Timer # Reference to the input queue timer
 var coyote_timer : Timer # Reference to the coyote timer
 var coyote_jump_available := true
 
+##################
+# LEAP VARIABLES #
+##################
+const LEAP_X_VELOCITY = 600.0
+const LEAP_Y_VELOCITY = -400.0
 var has_leap := true
 var is_leaping := false
+var did_wall_jump := false
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var interact_area: Area2D = $Area2D
 
+#########################
+# INTERACTION VARIABLES #
+#########################
+@onready var interact_area: Area2D = $Area2D
 var interact_offset_x := 24.0
 var nearby_interactables: Array = []
 var current_interactable: Node = null
+var is_interacting_with = null
 
-var was_on_floor := false
-var was_on_wall := false
 
+#######################
+# ANIMATION VARIABLES #
+#######################
 var anim_lock := false
 var locked_anim := ""
+var was_on_floor := false
 
-var did_wall_jump := false
 
-var is_interacting_with = null
 @onready var camera := get_parent().get_node("Camera2D")
 
 
@@ -55,51 +77,17 @@ func _ready() -> void:
 	add_child(coyote_timer)
 	coyote_timer.timeout.connect(coyote_timeout)
 	
+	# Set up interaction area
 	interact_area.body_entered.connect(_on_interact_body_entered)
 	interact_area.body_exited.connect(_on_interact_body_exited)
 	
-	animated_sprite.animation_finished.connect(_on_anim_finished)
+	# Set up animation system
+	animated_sprite.animation_finished.connect(on_anim_finished)
 	
-	
-func start_npc_focus(npc: Node2D) -> void:
-	is_interacting_with = npc
-	camera.focus_on(npc)
-	
-func end_npc_interaction() -> void:
-	is_interacting_with = null
-	camera.clear_focus()
-	
-func _on_interact_body_entered(body: Node) -> void:
-	if body.is_in_group("interactable") and body.has_method("interact"):
-		nearby_interactables.append(body)
-	
-func _on_interact_body_exited(body: Node) -> void:
-	if body == is_interacting_with:
-		end_npc_interaction()
-	nearby_interactables.erase(body)
-	
-func get_best_interactable() -> Node:
-	var best: Node = null
-	var best_dist := INF
-		
-	for obj in nearby_interactables:
-		if not is_instance_valid(obj):
-			continue
-		if obj.has_method("can_interact") and not obj.can_interact(self):
-			continue
-		
-		var d := global_position.distance_to(obj.global_position)
-		if d < best_dist:
-			best_dist = d
-			best = obj
-	
-	return best
-
 
 func _physics_process(delta) -> void:
 	
 	was_on_floor = is_on_floor()
-	was_on_wall = is_on_wall()
 	
 	# Get inputs
 	var horizontal_input := Input.get_axis("move_left", "move_right")
@@ -156,7 +144,7 @@ func _physics_process(delta) -> void:
 	# Apply velocity
 	move_and_slide()
 	
-	_update_animation(horizontal_input)
+	update_animation(horizontal_input)
 	
 	if Input.is_action_just_pressed("interact"):
 		var target := get_best_interactable()
@@ -169,8 +157,15 @@ func custom_get_gravity(input_dir : float = 0) -> float:
 		return WALL_GRAVITY
 	return GRAVITY if velocity.y < 0 else FALL_GRAVITY
 	
-	
-func _update_animation(horizontal_input: float) -> void:
+## Reset coyote jump
+func coyote_timeout() -> void:
+	coyote_jump_available = false
+
+
+
+
+
+func update_animation(horizontal_input: float) -> void:
 	
 	if horizontal_input > 0:
 		animated_sprite.flip_h = false
@@ -204,13 +199,11 @@ func _update_animation(horizontal_input: float) -> void:
 	else:
 		animated_sprite.play("jump")
 		
-
-func _on_anim_finished() -> void:
+func on_anim_finished() -> void:
 	if anim_lock and animated_sprite.animation == locked_anim:
 		anim_lock = false
 		locked_anim = ""
 		
-
 func play_one_shot(anim_name: String) -> void:
 	if anim_lock and locked_anim == anim_name:
 		return
@@ -219,7 +212,41 @@ func play_one_shot(anim_name: String) -> void:
 	animated_sprite.play(anim_name)
 
 
-## Reset coyote jump
-func coyote_timeout() -> void:
-	coyote_jump_available = false
+
+
+
+func start_npc_focus(npc: Node2D) -> void:
+	is_interacting_with = npc
+	camera.focus_on(npc)
+	
+func end_npc_interaction() -> void:
+	is_interacting_with = null
+	camera.clear_focus()
+	
+func _on_interact_body_entered(body: Node) -> void:
+	if body.is_in_group("interactable") and body.has_method("interact"):
+		nearby_interactables.append(body)
+	
+func _on_interact_body_exited(body: Node) -> void:
+	if body == is_interacting_with:
+		end_npc_interaction()
+	nearby_interactables.erase(body)
+	
+func get_best_interactable() -> Node:
+	var best: Node = null
+	var best_dist := INF
+		
+	for obj in nearby_interactables:
+		if not is_instance_valid(obj):
+			continue
+		if obj.has_method("can_interact") and not obj.can_interact(self):
+			continue
+		
+		var d := global_position.distance_to(obj.global_position)
+		if d < best_dist:
+			best_dist = d
+			best = obj
+	
+	return best
+
 	

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://7rqtjab6g60l"]
+
+[ext_resource type="Texture2D" uid="uid://bd3y5to74g8w3" path="res://assets/art/ui/interactIcon/frame_00001.png" id="1_ky6bc"]
+[ext_resource type="Texture2D" uid="uid://bgg6u5sdymdq8" path="res://assets/art/ui/interactIcon/frame_00002.png" id="2_dai4b"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h7rdw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ky6bc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_dai4b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="InteractIndicator" type="AnimatedSprite2D" unique_id=1724986315]
+sprite_frames = SubResource("SpriteFrames_h7rdw")
+autoplay = "default"
+frame = 1
+frame_progress = 0.20991269

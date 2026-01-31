@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b5djeuqdjp8gq" path="res://scenes/ball.tscn" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://cyh4a3652g1o6" path="res://scenes/npcs/blueford.tscn" id="7_gee14"]
 [ext_resource type="Texture2D" uid="uid://b2jndoyeks0bh" path="res://assets/art/tilesets/tileset.png" id="7_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://7rqtjab6g60l" path="res://scenes/ui/interact_indicator.tscn" id="9_0tnpc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u5sy4"]
 texture = ExtResource("7_u5sy4")
@@ -142,3 +143,6 @@ position = Vector2(501, 477)
 
 [node name="Blueford" parent="." unique_id=1378613578 instance=ExtResource("7_gee14")]
 position = Vector2(-20, 427)
+
+[node name="InteractIndicator" parent="." unique_id=1724986315 instance=ExtResource("9_0tnpc")]
+position = Vector2(-33, 371)

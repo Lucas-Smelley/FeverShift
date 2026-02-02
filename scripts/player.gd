@@ -219,22 +219,12 @@ func set_interact_area_facing(dir: int) -> void:
 		return
 	var facing = 1 if dir > 0 else -1
 	interact_area.position.x = abs(interact_area.position.x) * facing
-
-func start_npc_focus(npc: Node2D) -> void:
-	is_interacting_with = npc
-	camera.focus_on(npc)
-	
-func end_npc_interaction() -> void:
-	is_interacting_with = null
-	camera.clear_focus()
 	
 func _on_interact_body_entered(body: Node) -> void:
 	if body.is_in_group("interactable") and body.has_method("interact"):
 		nearby_interactables.append(body)
 	
 func _on_interact_body_exited(body: Node) -> void:
-	if body == is_interacting_with:
-		end_npc_interaction()
 	nearby_interactables.erase(body)
 	
 func get_best_interactable() -> Node:
@@ -253,7 +243,9 @@ func get_best_interactable() -> Node:
 			best = obj
 	
 	return best
-	
+
+
+
 
 func register_npc(npc: Node) -> void:
 	if not nearby_npcs.has(npc):
@@ -278,14 +270,19 @@ func get_best_npc() -> Node:
 		if d < best_dist:
 			best_dist = d
 			best = npc
-
 	return best
-	
+
+func start_npc_focus(npc: Node2D) -> void:
+	is_interacting_with = npc
+	camera.focus_on(npc)
+
+func end_npc_interaction() -> void:
+	is_interacting_with = null
+	camera.clear_focus()
+
 func try_talk() -> void:
 	var npc := get_best_npc()
 	if npc:
 		start_npc_focus(npc)
+		npc.set_icon_visible(false)
 		npc.interact(self)
-		
-
-	

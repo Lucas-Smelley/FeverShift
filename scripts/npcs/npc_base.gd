@@ -25,7 +25,7 @@ func can_interact(_player: Node) -> bool:
 func interact(player: Node) -> void:
 	if not can_interact(player):
 		return
-	# replace later with your dialogue UI manager
+	# replace later with dialogue UI manager
 	for line in dialogue_lines:
 		print("%s: %s" % [npc_name, line])
 
@@ -41,4 +41,5 @@ func _on_interact_area_body_exited(body: Node) -> void:
 		return
 	if body.has_method("unregister_npc"):
 		body.unregister_npc(self)
+		body.end_npc_interaction()
 	set_icon_visible(false)

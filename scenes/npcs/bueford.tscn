@@ -86,7 +86,7 @@ radius = 16.0
 height = 96.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5mvut"]
-size = Vector2(153, 118)
+size = Vector2(218, 170)
 
 [node name="Bueford" unique_id=186812243 instance=ExtResource("1_gxpkx")]
 npc_name = "Bueford"
@@ -103,7 +103,7 @@ shape = SubResource("CapsuleShape2D_5mvut")
 position = Vector2(-37, 53)
 
 [node name="CollisionShape2D" parent="InteractArea" index="0" unique_id=269031291]
-position = Vector2(26.5, -48)
+position = Vector2(28, -74)
 shape = SubResource("RectangleShape2D_5mvut")
 
 [node name="InteractIcon" parent="." index="3" unique_id=390744630]

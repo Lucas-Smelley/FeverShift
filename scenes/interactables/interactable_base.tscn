@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cqedum40vqy5s"]
+
+[ext_resource type="Script" uid="uid://bkojsvhtjma15" path="res://scripts/interactables/interactable_base.gd" id="1_lvapn"]
+[ext_resource type="PackedScene" uid="uid://dcsc300yyfscc" path="res://scenes/ui/interact_icon.tscn" id="1_w07y4"]
+
+[node name="InteractableBase" type="Node2D" unique_id=2053026439 groups=["interactable"]]
+script = ExtResource("1_lvapn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1885430786]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=949191719]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=465602487]
+
+[node name="InteractIcon" parent="." unique_id=1126567112 instance=ExtResource("1_w07y4")]

@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://cmxxgx2fv2i4s"]
 
 [ext_resource type="Script" uid="uid://c2hqjftv852tp" path="res://scripts/npcs/npc_base.gd" id="1_idac7"]
-[ext_resource type="Texture2D" uid="uid://bs2wluufv6c0j" path="res://assets/art/ui/interactIcon/Sprite-0001.png" id="2_noltt"]
-[ext_resource type="Texture2D" uid="uid://eqtwajislsdy" path="res://assets/art/ui/interactIcon/Sprite-0002.png" id="3_5md2p"]
+[ext_resource type="PackedScene" uid="uid://dcsc300yyfscc" path="res://scenes/ui/interact_icon.tscn" id="2_w2uib"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_noltt"]
 animations = [{
@@ -16,21 +15,7 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aedj1"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_aedj1"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_noltt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_5md2p")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[node name="NpcBase" type="CharacterBody2D" unique_id=186812243]
+[node name="NpcBase" type="CharacterBody2D" unique_id=186812243 groups=["npc"]]
 collision_layer = 8
 script = ExtResource("1_idac7")
 
@@ -49,7 +34,4 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea" unique_id=269031291]
 shape = SubResource("RectangleShape2D_aedj1")
 
-[node name="InteractIcon" type="AnimatedSprite2D" parent="." unique_id=390744630]
-visible = false
-sprite_frames = SubResource("SpriteFrames_aedj1")
-autoplay = "default"
+[node name="InteractIcon" parent="." unique_id=1126567112 instance=ExtResource("2_w2uib")]

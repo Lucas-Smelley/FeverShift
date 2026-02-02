@@ -5,10 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://df0evp5uaa5fv" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://bt8okpk418uu0" path="res://assets/art/backgrounds/floating.png" id="2_iywne"]
 [ext_resource type="Script" uid="uid://o41rnl8skqa2" path="res://scripts/CameraController.gd" id="6_gee14"]
-[ext_resource type="PackedScene" uid="uid://b5djeuqdjp8gq" path="res://scenes/ball.tscn" id="6_p57ef"]
-[ext_resource type="PackedScene" uid="uid://cyh4a3652g1o6" path="res://scenes/npcs/blueford.tscn" id="7_gee14"]
+[ext_resource type="PackedScene" uid="uid://bievkpvt5y30s" path="res://scenes/npcs/bueford.tscn" id="7_gee14"]
 [ext_resource type="Texture2D" uid="uid://b2jndoyeks0bh" path="res://assets/art/tilesets/tileset.png" id="7_u5sy4"]
-[ext_resource type="PackedScene" uid="uid://7rqtjab6g60l" path="res://scenes/ui/interact_indicator.tscn" id="9_0tnpc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u5sy4"]
 texture = ExtResource("7_u5sy4")
@@ -138,11 +136,5 @@ position = Vector2(595, 393)
 position = Vector2(595, 393)
 script = ExtResource("6_gee14")
 
-[node name="ball" parent="." unique_id=1956673404 instance=ExtResource("6_p57ef")]
-position = Vector2(501, 477)
-
-[node name="Blueford" parent="." unique_id=1378613578 instance=ExtResource("7_gee14")]
-position = Vector2(-20, 427)
-
-[node name="InteractIndicator" parent="." unique_id=1724986315 instance=ExtResource("9_0tnpc")]
-position = Vector2(-33, 371)
+[node name="Bueford" parent="." unique_id=186812243 instance=ExtResource("7_gee14")]
+position = Vector2(9, 426)

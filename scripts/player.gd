@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+@onready var camera := get_parent().get_node("Camera2D")
+
+
 ###################################
 # SIDE TO SIDE MOVEMENT VARIABLES #
 ###################################
@@ -50,6 +53,8 @@ var interact_offset_x := 24.0
 var nearby_interactables: Array = []
 var current_interactable: Node = null
 var is_interacting_with = null
+var nearby_npcs: Array[Node] = []
+
 
 
 #######################
@@ -58,9 +63,6 @@ var is_interacting_with = null
 var anim_lock := false
 var locked_anim := ""
 var was_on_floor := false
-
-
-@onready var camera := get_parent().get_node("Camera2D")
 
 
 func _ready() -> void:
@@ -146,10 +148,10 @@ func _physics_process(delta) -> void:
 	
 	update_animation(horizontal_input)
 	
+	set_interact_area_facing(horizontal_input)
+	
 	if Input.is_action_just_pressed("interact"):
-		var target := get_best_interactable()
-		if target:
-			target.interact(self)
+		try_talk()
 
 ## Returns the gravity based on the state of the player
 func custom_get_gravity(input_dir : float = 0) -> float:
@@ -169,10 +171,8 @@ func update_animation(horizontal_input: float) -> void:
 	
 	if horizontal_input > 0:
 		animated_sprite.flip_h = false
-		interact_area.position.x = interact_offset_x
 	elif horizontal_input < 0:
 		animated_sprite.flip_h = true
-		interact_area.position.x = interact_offset_x * -1
 		
 	if did_wall_jump:
 		did_wall_jump = false
@@ -214,6 +214,11 @@ func play_one_shot(anim_name: String) -> void:
 
 
 
+func set_interact_area_facing(dir: int) -> void:
+	if dir == 0:
+		return
+	var facing = 1 if dir > 0 else -1
+	interact_area.position.x = abs(interact_area.position.x) * facing
 
 func start_npc_focus(npc: Node2D) -> void:
 	is_interacting_with = npc
@@ -248,5 +253,39 @@ func get_best_interactable() -> Node:
 			best = obj
 	
 	return best
+	
+
+func register_npc(npc: Node) -> void:
+	if not nearby_npcs.has(npc):
+		nearby_npcs.append(npc)
+
+func unregister_npc(npc: Node) -> void:
+	if npc == is_interacting_with:
+		end_npc_interaction()
+	nearby_npcs.erase(npc)
+
+func get_best_npc() -> Node:
+	var best: Node = null
+	var best_dist := INF
+
+	for npc in nearby_npcs:
+		if not is_instance_valid(npc):
+			continue
+		if npc.has_method("can_interact") and not npc.can_interact(self):
+			continue
+
+		var d := global_position.distance_to(npc.global_position)
+		if d < best_dist:
+			best_dist = d
+			best = npc
+
+	return best
+	
+func try_talk() -> void:
+	var npc := get_best_npc()
+	if npc:
+		start_npc_focus(npc)
+		npc.interact(self)
+		
 
 	

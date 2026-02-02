@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dmxkfvb5dg636"]
 
 [ext_resource type="PackedScene" uid="uid://cqedum40vqy5s" path="res://scenes/interactables/interactable_base.tscn" id="1_8v45o"]
-[ext_resource type="Script" uid="uid://b48lfodabot8d" path="res://scenes/interactables/ball.gd" id="2_g5jx1"]
+[ext_resource type="Script" uid="uid://b48lfodabot8d" path="res://scripts/interactables/ball.gd" id="2_g5jx1"]
 [ext_resource type="Texture2D" uid="uid://dyterdsw6bklh" path="res://assets/art/objects/ball.png" id="2_wqyqv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g5jx1"]
@@ -17,4 +17,4 @@ texture = ExtResource("2_wqyqv")
 shape = SubResource("CircleShape2D_g5jx1")
 
 [node name="InteractIcon" parent="." index="2" unique_id=1126567112]
-position = Vector2(-1, -23)
+position = Vector2(-2, -26)

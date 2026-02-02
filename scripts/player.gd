@@ -80,8 +80,8 @@ func _ready() -> void:
 	coyote_timer.timeout.connect(coyote_timeout)
 	
 	# Set up interaction area
-	interact_area.body_entered.connect(_on_interact_body_entered)
-	interact_area.body_exited.connect(_on_interact_body_exited)
+	interact_area.area_entered.connect(_on_interact_area_entered)
+	interact_area.area_exited.connect(_on_interact_area_exited)
 	
 	# Set up animation system
 	animated_sprite.animation_finished.connect(on_anim_finished)
@@ -151,7 +151,7 @@ func _physics_process(delta) -> void:
 	set_interact_area_facing(horizontal_input)
 	
 	if Input.is_action_just_pressed("interact"):
-		try_talk()
+		handle_interact()
 
 ## Returns the gravity based on the state of the player
 func custom_get_gravity(input_dir : float = 0) -> float:
@@ -214,35 +214,25 @@ func play_one_shot(anim_name: String) -> void:
 
 
 
-func set_interact_area_facing(dir: int) -> void:
+func set_interact_area_facing(dir: float) -> void:
 	if dir == 0:
 		return
 	var facing = 1 if dir > 0 else -1
 	interact_area.position.x = abs(interact_area.position.x) * facing
 	
-func _on_interact_body_entered(body: Node) -> void:
-	if body.is_in_group("interactable") and body.has_method("interact"):
-		nearby_interactables.append(body)
+func _on_interact_area_entered(area: Area2D) -> void:
+	var interactable = area.interactable_base
+	if interactable == null:
+		return
+	interactable.set_icon_visible(true)
+	nearby_interactables.append(interactable)
 	
-func _on_interact_body_exited(body: Node) -> void:
-	nearby_interactables.erase(body)
-	
-func get_best_interactable() -> Node:
-	var best: Node = null
-	var best_dist := INF
-		
-	for obj in nearby_interactables:
-		if not is_instance_valid(obj):
-			continue
-		if obj.has_method("can_interact") and not obj.can_interact(self):
-			continue
-		
-		var d := global_position.distance_to(obj.global_position)
-		if d < best_dist:
-			best_dist = d
-			best = obj
-	
-	return best
+func _on_interact_area_exited(area: Area2D) -> void:
+	var interactable = area.interactable_base
+	if interactable == null:
+		return
+	interactable.set_icon_visible(false)
+	nearby_interactables.erase(interactable)
 
 
 
@@ -256,22 +246,6 @@ func unregister_npc(npc: Node) -> void:
 		end_npc_interaction()
 	nearby_npcs.erase(npc)
 
-func get_best_npc() -> Node:
-	var best: Node = null
-	var best_dist := INF
-
-	for npc in nearby_npcs:
-		if not is_instance_valid(npc):
-			continue
-		if npc.has_method("can_interact") and not npc.can_interact(self):
-			continue
-
-		var d := global_position.distance_to(npc.global_position)
-		if d < best_dist:
-			best_dist = d
-			best = npc
-	return best
-
 func start_npc_focus(npc: Node2D) -> void:
 	is_interacting_with = npc
 	camera.focus_on(npc)
@@ -280,9 +254,33 @@ func end_npc_interaction() -> void:
 	is_interacting_with = null
 	camera.clear_focus()
 
-func try_talk() -> void:
-	var npc := get_best_npc()
-	if npc:
-		start_npc_focus(npc)
-		npc.set_icon_visible(false)
-		npc.interact(self)
+
+
+func handle_interact() -> void:
+	var best_interactable = get_closest_valid(nearby_interactables)
+	if best_interactable:
+		best_interactable.set_icon_visible(false)
+		best_interactable.interact(self)
+		return
+
+	var best_npc = get_closest_valid(nearby_npcs)
+	if best_npc:
+		start_npc_focus(best_npc)
+		best_npc.set_icon_visible(false)
+		best_npc.interact(self)
+		
+func get_closest_valid(list: Array) -> Node:
+	var best_dist = INF
+	var best: Node = null
+
+	for n in list:
+
+		if not n.has_method("interact"):
+			continue
+
+		var d := global_position.distance_to((n as Node2D).global_position)
+		if d < best_dist:
+			best_dist = d
+			best = n
+
+	return best

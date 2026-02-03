@@ -3,49 +3,52 @@
 [ext_resource type="PackedScene" uid="uid://cmxxgx2fv2i4s" path="res://scenes/npcs/NpcBase.tscn" id="1_gxpkx"]
 [ext_resource type="Texture2D" uid="uid://nj0xhvurxjis" path="res://assets/art/characters/npcs-spritesheet.png" id="2_5mvut"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n8q0s"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mvut"]
 atlas = ExtResource("2_5mvut")
 region = Rect2(0, 512, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wk0i1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8q0s"]
 atlas = ExtResource("2_5mvut")
 region = Rect2(128, 512, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yuwyw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wk0i1"]
 atlas = ExtResource("2_5mvut")
 region = Rect2(256, 512, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qdrnb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yuwyw"]
 atlas = ExtResource("2_5mvut")
 region = Rect2(384, 512, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bftjh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdrnb"]
 atlas = ExtResource("2_5mvut")
 region = Rect2(512, 512, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lvw8g"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bftjh"]
 atlas = ExtResource("2_5mvut")
 region = Rect2(640, 512, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pwiyo"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvw8g"]
 atlas = ExtResource("2_5mvut")
 region = Rect2(768, 512, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ky60r"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwiyo"]
 atlas = ExtResource("2_5mvut")
 region = Rect2(896, 512, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ky60r"]
+atlas = ExtResource("2_5mvut")
+region = Rect2(1152, 512, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t7snh"]
 atlas = ExtResource("2_5mvut")
 region = Rect2(1024, 512, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hv1fa"]
-atlas = ExtResource("2_5mvut")
-region = Rect2(1152, 512, 128, 128)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_je4m3"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_hv1fa"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5mvut")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n8q0s")
 }, {
@@ -72,39 +75,27 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_t7snh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hv1fa")
 }],
 "loop": true,
-"name": &"idle",
-"speed": 10.0
+"name": &"default",
+"speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5mvut"]
-radius = 16.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_je4m3"]
+radius = 15.0
 height = 96.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5mvut"]
-size = Vector2(218, 170)
-
 [node name="Bueford" unique_id=186812243 instance=ExtResource("1_gxpkx")]
-npc_name = "Bueford"
-dialogue_lines = Array[String](["Hey there!", "Nice weather todat."])
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1775150501]
-sprite_frames = SubResource("SpriteFrames_je4m3")
+sprite_frames = SubResource("SpriteFrames_hv1fa")
+animation = &"default"
+autoplay = "default"
 
-[node name="CollisionShape2D" parent="." index="1" unique_id=2094599275]
-position = Vector2(-4, 16)
-shape = SubResource("CapsuleShape2D_5mvut")
+[node name="CollisionShape2D" parent="." index="2" unique_id=2094599275]
+position = Vector2(-6, 16)
+shape = SubResource("CapsuleShape2D_je4m3")
 
-[node name="InteractArea" parent="." index="2" unique_id=121167582]
-position = Vector2(-37, 53)
-
-[node name="CollisionShape2D" parent="InteractArea" index="0" unique_id=269031291]
-position = Vector2(28, -74)
-shape = SubResource("RectangleShape2D_5mvut")
-
-[node name="InteractIcon" parent="." index="3" unique_id=390744630]
-position = Vector2(-16, -57)
+[node name="InteractIcon" parent="." index="3" unique_id=1126567112]
+visible = true
+position = Vector2(-14, -53)

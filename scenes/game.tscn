@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bievkpvt5y30s" path="res://scenes/npcs/bueford.tscn" id="7_gee14"]
 [ext_resource type="Texture2D" uid="uid://b2jndoyeks0bh" path="res://assets/art/tilesets/tileset.png" id="7_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://dmxkfvb5dg636" path="res://scenes/interactables/ball.tscn" id="8_gee14"]
+[ext_resource type="PackedScene" uid="uid://dqsphi5cmmjg4" path="res://scenes/npcs/queeble.tscn" id="9_0tnpc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u5sy4"]
 texture = ExtResource("7_u5sy4")
@@ -138,7 +139,10 @@ position = Vector2(595, 393)
 script = ExtResource("6_gee14")
 
 [node name="Bueford" parent="." unique_id=186812243 instance=ExtResource("7_gee14")]
-position = Vector2(538, 426)
+position = Vector2(-49, 426)
+
+[node name="Queeble" parent="." unique_id=1053392133 instance=ExtResource("9_0tnpc")]
+position = Vector2(85, 427)
 
 [node name="Ball" parent="." unique_id=2053026439 instance=ExtResource("8_gee14")]
-position = Vector2(470, 454)
+position = Vector2(173, 459)

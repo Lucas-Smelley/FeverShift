@@ -51,11 +51,15 @@ var did_wall_jump := false
 @onready var interact_area: Area2D = $Area2D
 var interact_offset_x := 24.0
 var nearby_interactables: Array = []
-var current_interactable: Node = null
+var nearby_npcs: Array = []
 var is_interacting_with = null
-var nearby_npcs: Array[Node] = []
 
+var current_target: Node = null
 
+@export var target_recalc_distance := 15.0  
+
+var last_target_check_pos: Vector2
+var target_dirty := true
 
 #######################
 # ANIMATION VARIABLES #
@@ -83,10 +87,15 @@ func _ready() -> void:
 	interact_area.area_entered.connect(_on_interact_area_entered)
 	interact_area.area_exited.connect(_on_interact_area_exited)
 	
+	last_target_check_pos = global_position
+	
 	# Set up animation system
 	animated_sprite.animation_finished.connect(on_anim_finished)
 	
-
+func mark_targeting_dirty() -> void:
+	target_dirty = true
+	
+	
 func _physics_process(delta) -> void:
 	
 	was_on_floor = is_on_floor()
@@ -150,8 +159,11 @@ func _physics_process(delta) -> void:
 	
 	set_interact_area_facing(horizontal_input)
 	
+	maybe_update_target()
+	
 	if Input.is_action_just_pressed("interact"):
 		handle_interact()
+
 
 ## Returns the gravity based on the state of the player
 func custom_get_gravity(input_dir : float = 0) -> float:
@@ -162,8 +174,6 @@ func custom_get_gravity(input_dir : float = 0) -> float:
 ## Reset coyote jump
 func coyote_timeout() -> void:
 	coyote_jump_available = false
-
-
 
 
 
@@ -224,15 +234,15 @@ func _on_interact_area_entered(area: Area2D) -> void:
 	var interactable = area.interactable_base
 	if interactable == null:
 		return
-	interactable.set_icon_visible(true)
 	nearby_interactables.append(interactable)
+	target_dirty = true
 	
 func _on_interact_area_exited(area: Area2D) -> void:
 	var interactable = area.interactable_base
 	if interactable == null:
 		return
-	interactable.set_icon_visible(false)
 	nearby_interactables.erase(interactable)
+	target_dirty = true
 
 
 
@@ -246,7 +256,9 @@ func unregister_npc(npc: Node) -> void:
 		end_npc_interaction()
 	nearby_npcs.erase(npc)
 
-func start_npc_focus(npc: Node2D) -> void:
+func start_npc_interaction(npc: Node2D) -> void:
+	if is_interacting_with:
+		end_npc_interaction()
 	is_interacting_with = npc
 	camera.focus_on(npc)
 
@@ -254,21 +266,40 @@ func end_npc_interaction() -> void:
 	is_interacting_with = null
 	camera.clear_focus()
 
+	
+func maybe_update_target() -> void:
+	var total := nearby_interactables.size() + nearby_npcs.size()
+
+	# If nothing nearby, ensure we clear/hide once (no spam)
+	if total == 0:
+		if current_target and is_instance_valid(current_target):
+			current_target.set_icon_visible(false)
+		current_target = null
+		target_dirty = false
+		last_target_check_pos = global_position
+		return
+
+	# If only 1 thing nearby, we can choose it without distance thrashing.
+	# Still only run if dirty (enter/exit) so we don't redo work.
+	if total == 1:
+		if target_dirty:
+			update_target()
+			target_dirty = false
+			last_target_check_pos = global_position
+		return
+
+	# total >= 2: only re-evaluate if dirty OR moved far enough
+	var moved_far_enough := global_position.distance_to(last_target_check_pos) >= target_recalc_distance
+	if target_dirty or moved_far_enough:
+		update_target()
+		target_dirty = false
+		last_target_check_pos = global_position
 
 
 func handle_interact() -> void:
-	var best_interactable = get_closest_valid(nearby_interactables)
-	if best_interactable:
-		best_interactable.set_icon_visible(false)
-		best_interactable.interact(self)
-		return
+	current_target.interact(self)
 
-	var best_npc = get_closest_valid(nearby_npcs)
-	if best_npc:
-		start_npc_focus(best_npc)
-		best_npc.set_icon_visible(false)
-		best_npc.interact(self)
-		
+
 func get_closest_valid(list: Array) -> Node:
 	var best_dist = INF
 	var best: Node = null
@@ -284,3 +315,32 @@ func get_closest_valid(list: Array) -> Node:
 			best = n
 
 	return best
+
+func update_target() -> void:
+
+	var new_target: Node = null
+
+	# Prefer interactables
+	var best_interactable = get_closest_valid(nearby_interactables)
+	if best_interactable:
+		new_target = best_interactable
+	else:
+		# Fallback to NPCs
+		var best_npc = get_closest_valid(nearby_npcs)
+		if best_npc:
+			new_target = best_npc
+
+	# If target didn't change, do nothing
+	if new_target == current_target:
+		return
+
+	# Hide old icon
+	if current_target and is_instance_valid(current_target):
+		current_target.set_icon_visible(false)
+
+	# Set new target
+	current_target = new_target
+
+	# Show new icon
+	if current_target and is_instance_valid(current_target):
+		current_target.set_icon_visible(true)

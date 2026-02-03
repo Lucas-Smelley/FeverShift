@@ -25,6 +25,7 @@ func can_interact(_player: Node) -> bool:
 func interact(player: Node) -> void:
 	if not can_interact(player):
 		return
+	player.start_npc_interaction(self)
 	# replace later with dialogue UI manager
 	for line in dialogue_lines:
 		print("%s: %s" % [npc_name, line])
@@ -34,12 +35,13 @@ func _on_interact_area_body_entered(body: Node) -> void:
 		return
 	if body.has_method("register_npc"):
 		body.register_npc(self)
-	set_icon_visible(true)
+		body.target_dirty = true
 
 func _on_interact_area_body_exited(body: Node) -> void:
 	if not body.is_in_group("player"):
 		return
-	if body.has_method("unregister_npc"):
-		body.unregister_npc(self)
+	body.unregister_npc(self)
+	body.target_dirty = true
+	if body.is_interacting_with == self and body.has_method("unregister_npc"):
 		body.end_npc_interaction()
-	set_icon_visible(false)
+		body.is_interacting_with = null

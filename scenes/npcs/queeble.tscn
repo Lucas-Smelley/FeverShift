@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://dqsphi5cmmjg4"]
+
+[ext_resource type="PackedScene" uid="uid://cmxxgx2fv2i4s" path="res://scenes/npcs/NpcBase.tscn" id="1_ic0i3"]
+[ext_resource type="Texture2D" uid="uid://nj0xhvurxjis" path="res://assets/art/characters/npcs-spritesheet.png" id="2_gt8bx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ic0i3"]
+atlas = ExtResource("2_gt8bx")
+region = Rect2(0, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gt8bx"]
+atlas = ExtResource("2_gt8bx")
+region = Rect2(128, 384, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dwas4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ic0i3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gt8bx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ic0i3"]
+height = 38.0
+
+[node name="Queeble" unique_id=186812243 instance=ExtResource("1_ic0i3")]
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=1775150501]
+sprite_frames = SubResource("SpriteFrames_dwas4")
+animation = &"default"
+autoplay = "default"
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=2094599275]
+position = Vector2(3, 45)
+shape = SubResource("CapsuleShape2D_ic0i3")
+
+[node name="InteractIcon" parent="." index="3" unique_id=1126567112]
+visible = true

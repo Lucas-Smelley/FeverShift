@@ -1,7 +1,7 @@
 extends TaskCondition
 class_name CollectItemCondition
 
-@export var item_id: String = "apple"
+@export var item_id: String = ""
 @export var required_amount: int = 3
 
 var current_amount: int = 0
@@ -33,4 +33,5 @@ func _on_world_event(event_name: String, data: Dictionary) -> void:
 	print("Progress:", current_amount, "/", required_amount)
 
 	if current_amount >= required_amount:
+		print("condition collect 3 balls completed")
 		_set_completed(true)

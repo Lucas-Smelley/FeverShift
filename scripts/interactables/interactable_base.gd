@@ -1,7 +1,9 @@
 extends Node2D
 class_name Interactable
 
-@export var interact_priority: int = 0
+@export var item_id: String = ""      # logic id (e.g. "ball")
+@export var item_name: String = ""    # display name (e.g. "Rubber Ball")
+
 @export var one_shot: bool = false
 @export var enabled: bool = true
 
@@ -21,6 +23,6 @@ func can_interact() -> bool:
 	return true
 
 func interact(player: Node) -> void:
-	# override in child scenes
+	# Base behavior only handles "used" state
 	if one_shot:
 		_used = true

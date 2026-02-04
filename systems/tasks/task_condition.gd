@@ -3,11 +3,13 @@ class_name TaskCondition
 
 signal condition_changed
 
+@export var key: String = ""  # optional identifier, like "collect_balls"
 @export var description: String = "Condition"
+
 var completed: bool = false
+var task: Task = null  # set by Task.start()
 
 func is_complete() -> bool:
-	
 	return completed
 
 func activate(_owner: Node) -> void:

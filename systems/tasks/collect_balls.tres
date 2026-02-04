@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Task" format=3 uid="uid://brhcshjpwh3u1"]
+
+[ext_resource type="Script" uid="uid://dome8yvmeu6wv" path="res://systems/tasks/task_condition.gd" id="1_6eue4"]
+[ext_resource type="Script" uid="uid://domitk0y41d3p" path="res://systems/tasks/task.gd" id="2_p50ma"]
+[ext_resource type="Script" uid="uid://bjejr78y5mf0s" path="res://systems/tasks/conditions/collect_item_condition.gd" id="2_tateh"]
+[ext_resource type="Script" uid="uid://ddgpr2sp46mk1" path="res://systems/tasks/conditions/talk_to_npc_condition.gd" id="3_cnfyu"]
+
+[sub_resource type="Resource" id="Resource_1ximj"]
+script = ExtResource("2_tateh")
+item_id = "ball"
+key = "collect_balls"
+metadata/_custom_type_script = "uid://bjejr78y5mf0s"
+
+[sub_resource type="Resource" id="Resource_qpq1y"]
+script = ExtResource("3_cnfyu")
+npc_id = "bueford"
+requires_condition_key = "collect_balls"
+metadata/_custom_type_script = "uid://ddgpr2sp46mk1"
+
+[resource]
+script = ExtResource("2_p50ma")
+id = "collect_balls"
+title = "Collect the Balls"
+description = "Collect 3 balls, then report back."
+conditions = Array[ExtResource("1_6eue4")]([SubResource("Resource_1ximj"), SubResource("Resource_qpq1y")])
+reward_money = 15
+metadata/_custom_type_script = "uid://domitk0y41d3p"

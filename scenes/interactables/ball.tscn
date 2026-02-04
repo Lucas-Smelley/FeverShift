@@ -9,6 +9,9 @@ radius = 7.0
 
 [node name="Ball" unique_id=2053026439 instance=ExtResource("1_8v45o")]
 script = ExtResource("2_g5jx1")
+amount = 1
+item_id = "ball"
+item_name = "Ball of varying Ballness"
 
 [node name="Sprite2D" parent="." index="0" unique_id=1885430786]
 texture = ExtResource("2_wqyqv")

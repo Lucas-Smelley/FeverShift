@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cmxxgx2fv2i4s" path="res://scenes/npcs/NpcBase.tscn" id="1_gxpkx"]
 [ext_resource type="Texture2D" uid="uid://nj0xhvurxjis" path="res://assets/art/characters/npcs-spritesheet.png" id="2_5mvut"]
 [ext_resource type="Script" uid="uid://cen6y4xd7lro7" path="res://scripts/npcs/bueford.gd" id="2_n8q0s"]
+[ext_resource type="Resource" uid="uid://brhcshjpwh3u1" path="res://systems/tasks/collect_balls.tres" id="4_qdrnb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5mvut"]
 atlas = ExtResource("2_5mvut")
@@ -88,6 +89,9 @@ height = 96.0
 
 [node name="Bueford" unique_id=186812243 instance=ExtResource("1_gxpkx")]
 script = ExtResource("2_n8q0s")
+collect_balls_task = ExtResource("4_qdrnb")
+npc_id = "bueford"
+npc_name = "Bueford Sad Thing"
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1775150501]
 sprite_frames = SubResource("SpriteFrames_hv1fa")

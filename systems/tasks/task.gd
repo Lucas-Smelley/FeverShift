@@ -25,9 +25,12 @@ func start(task_owner: Node) -> void:
 	for c in conditions:
 		if c == null:
 			continue
-		# listen for condition changes
+
+		c.task = self 
+
 		c.condition_changed.connect(_on_condition_changed)
 		c.activate(owner)
+
 
 	_check_complete()
 	task_updated.emit()
@@ -50,6 +53,15 @@ func stop() -> void:
 func _on_condition_changed() -> void:
 	_check_complete()
 	task_updated.emit()
+	
+func is_condition_complete(condition_key: String) -> bool:
+	for c in conditions:
+		if c == null:
+			continue
+		if c.key == condition_key:
+			return c.is_complete()
+	return false
+
 
 func _check_complete() -> void:
 	if state != State.ACTIVE:
@@ -62,4 +74,5 @@ func _check_complete() -> void:
 			return
 
 	state = State.COMPLETE
+	print("task completed")
 	task_completed.emit()

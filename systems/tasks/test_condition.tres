@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="TaskCondition" format=3 uid="uid://pw7n0x15han4"]
+
+[ext_resource type="Script" uid="uid://dome8yvmeu6wv" path="res://systems/tasks/task_condition.gd" id="1_2jcyf"]
+
+[resource]
+script = ExtResource("1_2jcyf")
+metadata/_custom_type_script = "uid://dome8yvmeu6wv"

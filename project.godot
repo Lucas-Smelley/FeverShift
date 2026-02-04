@@ -19,6 +19,11 @@ run/main_scene="uid://dx2hj3sog5tcs"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+WorldEvents="*uid://cj55je3bci5hf"
+TaskService="*uid://crlhkpe12s6tw"
+
 [display]
 
 window/size/viewport_width=1280

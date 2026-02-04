@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cmxxgx2fv2i4s" path="res://scenes/npcs/NpcBase.tscn" id="1_gxpkx"]
 [ext_resource type="Texture2D" uid="uid://nj0xhvurxjis" path="res://assets/art/characters/npcs-spritesheet.png" id="2_5mvut"]
+[ext_resource type="Script" uid="uid://cen6y4xd7lro7" path="res://scripts/npcs/bueford.gd" id="2_n8q0s"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5mvut"]
 atlas = ExtResource("2_5mvut")
@@ -86,6 +87,7 @@ radius = 15.0
 height = 96.0
 
 [node name="Bueford" unique_id=186812243 instance=ExtResource("1_gxpkx")]
+script = ExtResource("2_n8q0s")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1775150501]
 sprite_frames = SubResource("SpriteFrames_hv1fa")
@@ -97,5 +99,4 @@ position = Vector2(-6, 16)
 shape = SubResource("CapsuleShape2D_je4m3")
 
 [node name="InteractIcon" parent="." index="3" unique_id=1126567112]
-visible = true
 position = Vector2(-14, -53)

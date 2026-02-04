@@ -92,9 +92,30 @@ func _ready() -> void:
 	# Set up animation system
 	animated_sprite.animation_finished.connect(on_anim_finished)
 	
+	var cond := CollectItemCondition.new()
+	cond.item_id = "apple"
+	cond.required_amount = 3
+
+	var template := Task.new()
+	template.id = "collect_apples"
+	template.title = "Collect 3 apples"
+	template.conditions = [cond]
+
+	TaskService.task_completed.connect(func(t: Task):
+		print("MANAGER SAYS COMPLETE:", t.id, t.title)
+	)
+
+	TaskService.add_task(template, self)
+
+	WorldEvents.emit_event("item_collected", {"item_id": "apple", "amount": 1})
+	WorldEvents.emit_event("item_collected", {"item_id": "apple", "amount": 1})
+	WorldEvents.emit_event("item_collected", {"item_id": "apple", "amount": 1})
+	
 func mark_targeting_dirty() -> void:
 	target_dirty = true
-	
+
+func _on_world_event(event_name: String, data: Dictionary) -> void:
+	print("WORLD EVENT:", event_name, data)
 	
 func _physics_process(delta) -> void:
 	
@@ -297,7 +318,8 @@ func maybe_update_target() -> void:
 
 
 func handle_interact() -> void:
-	current_target.interact(self)
+	if current_target:
+		current_target.interact(self)
 
 
 func get_closest_valid(list: Array) -> Node:

@@ -8,6 +8,8 @@ class_name NpcBase
 @onready var interact_area: Area2D = $InteractArea
 @onready var interact_icon: AnimatedSprite2D = get_node_or_null("InteractIcon")
 
+@export var offered_tasks: Array[Task] = []
+
 func _ready() -> void:
 	interact_area.body_entered.connect(_on_interact_area_body_entered)
 	interact_area.body_exited.connect(_on_interact_area_body_exited)
@@ -29,6 +31,16 @@ func interact(player: Node) -> void:
 	# replace later with dialogue UI manager
 	for line in dialogue_lines:
 		print("%s: %s" % [npc_name, line])
+		
+	for t in offered_tasks:
+		if t == null:
+			continue
+		if TaskService.is_completed(t.id) or TaskService.has_task(t.id):
+			continue
+
+		TaskService.add_task(t, self)
+		print("%s gave task: %s" % [npc_name, t.title])
+		break
 
 func _on_interact_area_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):

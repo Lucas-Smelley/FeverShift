@@ -3,6 +3,9 @@ extends NpcBase
 @export var collect_balls_task: Task
 
 func on_interact(player: Node) -> void:
+	
+	show_dialogue("Bring me 3 balls.")
+
 	if collect_balls_task == null:
 		return
 

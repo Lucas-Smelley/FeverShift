@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c2hqjftv852tp" path="res://scripts/npcs/npc_base.gd" id="1_idac7"]
 [ext_resource type="PackedScene" uid="uid://dcsc300yyfscc" path="res://scenes/ui/interact_icon.tscn" id="2_w2uib"]
 [ext_resource type="Script" uid="uid://dsr7kx5yk8fst" path="res://scripts/interactables/interact_icon.gd" id="3_noltt"]
+[ext_resource type="PackedScene" uid="uid://culos4jhcpho7" path="res://scenes/ui/speech_bubble.tscn" id="4_5md2p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aedj1"]
 size = Vector2(214, 129)
@@ -12,7 +13,7 @@ collision_layer = 8
 script = ExtResource("1_idac7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1775150501]
-animation = &"idle"
+animation = &""
 
 [node name="InteractArea" type="Area2D" parent="." unique_id=121167582]
 collision_layer = 0
@@ -27,3 +28,6 @@ shape = SubResource("RectangleShape2D_aedj1")
 [node name="InteractIcon" parent="." unique_id=1126567112 instance=ExtResource("2_w2uib")]
 visible = true
 script = ExtResource("3_noltt")
+
+[node name="SpeechBubble" parent="." unique_id=1650553509 instance=ExtResource("4_5md2p")]
+position = Vector2(68, -51)

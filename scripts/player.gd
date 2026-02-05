@@ -255,14 +255,13 @@ func register_npc(npc: Node) -> void:
 		nearby_npcs.append(npc)
 
 func unregister_npc(npc: Node) -> void:
-	if npc == is_interacting_with:
-		end_npc_interaction()
 	nearby_npcs.erase(npc)
 
 func start_npc_interaction(npc: Node2D) -> void:
 	if is_interacting_with:
 		end_npc_interaction()
 	is_interacting_with = npc
+	print(is_interacting_with)
 	camera.focus_on(npc)
 
 func end_npc_interaction() -> void:
@@ -310,7 +309,7 @@ func get_closest_valid(list: Array) -> Node:
 
 	for n in list:
 
-		if not n.has_method("interact"):
+		if not n.has_method("interact") or is_interacting_with == n:
 			continue
 
 		var d := global_position.distance_to((n as Node2D).global_position)

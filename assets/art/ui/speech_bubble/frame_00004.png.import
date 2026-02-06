@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bar1ohd0jtd8r"
-path="res://.godot/imported/Sprite-0002.png-b2d1114c38fbcbe5ca637b1acdea3b50.ctex"
+uid="uid://bno5oe6x3qjif"
+path="res://.godot/imported/frame_00004.png-a416207cdd1c7b6e16c68482ef69c1d7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/ui/speech_bubble/Sprite-0002.png"
-dest_files=["res://.godot/imported/Sprite-0002.png-b2d1114c38fbcbe5ca637b1acdea3b50.ctex"]
+source_file="res://assets/art/ui/speech_bubble/frame_00004.png"
+dest_files=["res://.godot/imported/frame_00004.png-a416207cdd1c7b6e16c68482ef69c1d7.ctex"]
 
 [params]
 

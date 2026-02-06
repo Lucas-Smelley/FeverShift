@@ -10,8 +10,13 @@ class_name NpcBase
 @onready var interact_icon: AnimatedSprite2D = get_node_or_null("InteractIcon")
 
 @onready var speech_bubble: Node2D = $SpeechBubble
-@onready var bubble_sprite: AnimatedSprite2D = $SpeechBubble/Bubble
-@onready var bubble_label: RichTextLabel = $SpeechBubble/Label
+@onready var bubble_sprite: AnimatedSprite2D = $SpeechBubble/bubble
+@onready var bubble_label: RichTextLabel = $SpeechBubble/RichTextLabel
+
+
+@export var char_delay := 0.02
+var is_typing := false
+var full_text := ""
 
 
 func _ready() -> void:
@@ -20,6 +25,8 @@ func _ready() -> void:
 
 	if interact_icon:
 		interact_icon.visible = false
+		
+	bubble_label.visible_characters_behavior = TextServer.VC_CHARS_AFTER_SHAPING
 		
 	hide_dialogue()
 
@@ -70,15 +77,29 @@ func _on_interact_area_body_exited(body: Node) -> void:
 	
 	if body.is_interacting_with == self:
 		if body.has_method("end_npc_interaction"):
-			body.end_npc_interaction()
+			body.end_npc_interaction(self)
 		body.is_interacting_with = null
 
-		
 
 func show_dialogue(text: String) -> void:
-	bubble_label.text = text
-	bubble_sprite.play("idle")
+	is_typing = true
 	speech_bubble.visible = true
+	bubble_sprite.play("idle")
+
+	bubble_label.text = text
+	bubble_label.visible_characters = 0
+
+	for i in text.length():
+		if not is_typing:
+			break
+		bubble_label.visible_characters = i + 1
+		await get_tree().create_timer(char_delay).timeout
+
+	bubble_label.visible_characters = -1
+	is_typing = false
+
+func skip_typing() -> void:
+	is_typing = false
 
 func hide_dialogue() -> void:
 	speech_bubble.visible = false

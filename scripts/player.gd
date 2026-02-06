@@ -165,7 +165,10 @@ func _physics_process(delta) -> void:
 	maybe_update_target()
 	
 	if Input.is_action_just_pressed("interact"):
-		handle_interact()
+		if is_interacting_with and is_interacting_with.is_typing:
+			is_interacting_with.skip_typing()
+		else:
+			handle_interact()
 
 
 ## Returns the gravity based on the state of the player
@@ -259,14 +262,14 @@ func unregister_npc(npc: Node) -> void:
 
 func start_npc_interaction(npc: Node2D) -> void:
 	if is_interacting_with:
-		end_npc_interaction()
+		end_npc_interaction(is_interacting_with)
 	is_interacting_with = npc
-	print(is_interacting_with)
 	camera.focus_on(npc)
 
-func end_npc_interaction() -> void:
-	is_interacting_with = null
+func end_npc_interaction(npc: Node2D) -> void:
+	npc.hide_dialogue()
 	camera.clear_focus()
+	is_interacting_with = null
 
 	
 func maybe_update_target() -> void:
@@ -299,7 +302,7 @@ func maybe_update_target() -> void:
 
 
 func handle_interact() -> void:
-	if current_target:
+	if current_target and current_target != is_interacting_with:
 		current_target.interact(self)
 
 

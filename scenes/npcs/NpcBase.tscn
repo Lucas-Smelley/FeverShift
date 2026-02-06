@@ -3,10 +3,34 @@
 [ext_resource type="Script" uid="uid://c2hqjftv852tp" path="res://scripts/npcs/npc_base.gd" id="1_idac7"]
 [ext_resource type="PackedScene" uid="uid://dcsc300yyfscc" path="res://scenes/ui/interact_icon.tscn" id="2_w2uib"]
 [ext_resource type="Script" uid="uid://dsr7kx5yk8fst" path="res://scripts/interactables/interact_icon.gd" id="3_noltt"]
-[ext_resource type="PackedScene" uid="uid://culos4jhcpho7" path="res://scenes/ui/speech_bubble.tscn" id="4_5md2p"]
+[ext_resource type="Texture2D" uid="uid://b132moipu1ohs" path="res://assets/art/ui/speech_bubble/frame_00001.png" id="4_yd4dc"]
+[ext_resource type="Script" uid="uid://bla6ph2si2vvs" path="res://scripts/ui/response_menu.gd" id="5_aedj1"]
+[ext_resource type="Texture2D" uid="uid://vcmeecm2j1xt" path="res://assets/art/ui/speech_bubble/frame_00002.png" id="5_y2h7c"]
+[ext_resource type="Texture2D" uid="uid://c7346lv4evo6w" path="res://assets/art/ui/speech_bubble/frame_00003.png" id="6_ou0kd"]
+[ext_resource type="Texture2D" uid="uid://bno5oe6x3qjif" path="res://assets/art/ui/speech_bubble/frame_00004.png" id="7_mpisy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aedj1"]
 size = Vector2(214, 129)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lns4f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_yd4dc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_y2h7c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ou0kd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_mpisy")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}]
 
 [node name="NpcBase" type="CharacterBody2D" unique_id=186812243 groups=["npc"]]
 collision_layer = 8
@@ -29,5 +53,38 @@ shape = SubResource("RectangleShape2D_aedj1")
 visible = true
 script = ExtResource("3_noltt")
 
-[node name="SpeechBubble" parent="." unique_id=1650553509 instance=ExtResource("4_5md2p")]
-position = Vector2(68, -51)
+[node name="SpeechBubble" type="Node2D" parent="." unique_id=1392503212]
+position = Vector2(-105, -83)
+
+[node name="bubble" type="AnimatedSprite2D" parent="SpeechBubble" unique_id=1867100754]
+scale = Vector2(-1, 1)
+sprite_frames = SubResource("SpriteFrames_lns4f")
+animation = &"idle"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SpeechBubble" unique_id=687782949]
+offset_left = -70.0
+offset_top = -46.0
+offset_right = 69.0
+offset_bottom = 37.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResponseMenu" type="Node2D" parent="." unique_id=335020451]
+script = ExtResource("5_aedj1")
+
+[node name="Control" type="Control" parent="ResponseMenu" unique_id=1988600424]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="OptionsBox" type="VBoxContainer" parent="ResponseMenu/Control" unique_id=508556773]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="ResponseMenu/Control/OptionsBox" unique_id=1059361032]
+layout_mode = 2

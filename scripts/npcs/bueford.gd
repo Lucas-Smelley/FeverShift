@@ -4,7 +4,7 @@ extends NpcBase
 
 func on_interact(player: Node) -> void:
 	
-	show_dialogue("Bring me 3 balls.")
+	show_dialogue("Would u please please pleaseee bring me 3 balls?? :(")
 
 	if collect_balls_task == null:
 		return

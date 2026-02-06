@@ -37,6 +37,11 @@ player=""
 camera=""
 npc=""
 
+[gui]
+
+fonts/dynamic_fonts/use_oversampling=false
+theme/custom_font="uid://b76aqxlejgfm0"
+
 [input]
 
 move_right={

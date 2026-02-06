@@ -106,4 +106,4 @@ shape = SubResource("CapsuleShape2D_je4m3")
 position = Vector2(-14, -53)
 
 [node name="SpeechBubble" parent="." index="4" unique_id=1650553509]
-position = Vector2(74, -70)
+position = Vector2(-131, -108)

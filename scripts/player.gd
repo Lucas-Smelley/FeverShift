@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var camera := get_parent().get_node("Camera2D")
 
+@onready var inventory: Node2D = $Inventory
 
 ###################################
 # SIDE TO SIDE MOVEMENT VARIABLES #

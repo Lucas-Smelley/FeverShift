@@ -26,3 +26,5 @@ func interact(player: Node) -> void:
 	# Base behavior only handles "used" state
 	if one_shot:
 		_used = true
+		
+	

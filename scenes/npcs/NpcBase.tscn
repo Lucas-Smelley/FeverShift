@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://dcsc300yyfscc" path="res://scenes/ui/interact_icon.tscn" id="2_w2uib"]
 [ext_resource type="Script" uid="uid://dsr7kx5yk8fst" path="res://scripts/interactables/interact_icon.gd" id="3_noltt"]
 [ext_resource type="Texture2D" uid="uid://b132moipu1ohs" path="res://assets/art/ui/speech_bubble/frame_00001.png" id="4_yd4dc"]
-[ext_resource type="Script" uid="uid://bla6ph2si2vvs" path="res://scripts/ui/response_menu.gd" id="5_aedj1"]
 [ext_resource type="Texture2D" uid="uid://vcmeecm2j1xt" path="res://assets/art/ui/speech_bubble/frame_00002.png" id="5_y2h7c"]
 [ext_resource type="Texture2D" uid="uid://c7346lv4evo6w" path="res://assets/art/ui/speech_bubble/frame_00003.png" id="6_ou0kd"]
 [ext_resource type="Texture2D" uid="uid://bno5oe6x3qjif" path="res://assets/art/ui/speech_bubble/frame_00004.png" id="7_mpisy"]
@@ -71,20 +70,3 @@ fit_content = true
 scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="ResponseMenu" type="Node2D" parent="." unique_id=335020451]
-script = ExtResource("5_aedj1")
-
-[node name="Control" type="Control" parent="ResponseMenu" unique_id=1988600424]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="OptionsBox" type="VBoxContainer" parent="ResponseMenu/Control" unique_id=508556773]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="ResponseMenu/Control/OptionsBox" unique_id=1059361032]
-layout_mode = 2

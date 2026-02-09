@@ -23,6 +23,7 @@ config/icon="res://icon.svg"
 
 WorldEvents="*uid://cj55je3bci5hf"
 TaskService="*uid://crlhkpe12s6tw"
+Dialogue="*uid://drbkne6t6ccat"
 
 [display]
 
@@ -91,6 +92,7 @@ interact={
 2d_physics/layer_4="NPC"
 2d_physics/layer_5="Interactable_Solid"
 2d_physics/layer_6="Interactable_Trigger"
+2d_physics/layer_7="Collectable"
 
 [rendering]
 

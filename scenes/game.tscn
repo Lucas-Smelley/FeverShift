@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b2jndoyeks0bh" path="res://assets/art/tilesets/tileset.png" id="7_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://dmxkfvb5dg636" path="res://scenes/interactables/ball.tscn" id="8_gee14"]
 [ext_resource type="PackedScene" uid="uid://dqsphi5cmmjg4" path="res://scenes/npcs/queeble.tscn" id="9_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://dl3kkqsix18di" path="res://scenes/collectables/girl_frog.tscn" id="10_vtaks"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u5sy4"]
 texture = ExtResource("7_u5sy4")
@@ -146,3 +147,12 @@ position = Vector2(85, 427)
 
 [node name="Ball" parent="." unique_id=2053026439 instance=ExtResource("8_gee14")]
 position = Vector2(173, 459)
+
+[node name="GirlFrog" parent="." unique_id=1671882071 instance=ExtResource("10_vtaks")]
+position = Vector2(694, 28)
+
+[node name="GirlFrog2" parent="." unique_id=972634408 instance=ExtResource("10_vtaks")]
+position = Vector2(1040, -14)
+
+[node name="GirlFrog3" parent="." unique_id=1109421417 instance=ExtResource("10_vtaks")]
+position = Vector2(974, 418)

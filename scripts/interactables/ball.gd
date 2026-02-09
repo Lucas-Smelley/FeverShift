@@ -14,8 +14,6 @@ func interact(player: Node) -> void:
 		"amount": amount
 	})
 
-	print("Collected:", item_name)
-
 	if one_shot:
 		enabled = false
 		visible = false

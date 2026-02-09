@@ -6,6 +6,10 @@
 
 [node name="InteractableBase" type="Node2D" unique_id=2053026439 groups=["interactable"]]
 script = ExtResource("1_lvapn")
+item_id = null
+item_name = null
+one_shot = null
+enabled = null
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1885430786]
 

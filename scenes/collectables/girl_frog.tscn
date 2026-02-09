@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dl3kkqsix18di"]
+
+[ext_resource type="PackedScene" uid="uid://bd4g6wvdn5k67" path="res://scenes/collectables/collectable_base.tscn" id="1_r4vte"]
+[ext_resource type="Texture2D" uid="uid://dogxgkiv3g73a" path="res://assets/art/objects/girlFrog.png" id="2_706sw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_706sw"]
+radius = 15.033297
+
+[node name="GirlFrog" unique_id=1671882071 instance=ExtResource("1_r4vte")]
+item_id = "girlfrog"
+item_name = "Girl Frog Coin"
+
+[node name="Sprite2D" parent="." index="0" unique_id=1480873681]
+texture = ExtResource("2_706sw")
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=462151559]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_706sw")

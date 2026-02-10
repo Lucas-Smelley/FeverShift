@@ -166,10 +166,14 @@ func _physics_process(delta) -> void:
 	maybe_update_target()
 	
 	if Input.is_action_just_pressed("interact"):
-		if is_interacting_with and is_interacting_with.is_typing:
-			is_interacting_with.skip_typing()
+		if is_interacting_with:
+			if is_interacting_with.is_typing:
+				is_interacting_with.skip_typing()
+			else:
+				is_interacting_with.emit_signal("dialogue_advance")
 		else:
 			handle_interact()
+
 
 
 ## Returns the gravity based on the state of the player

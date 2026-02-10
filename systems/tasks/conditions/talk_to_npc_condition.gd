@@ -1,5 +1,4 @@
 extends TaskCondition
-class_name TalkToNpcCondition
 
 @export var npc_id: String = ""
 @export var requires_condition_key: String = ""  # e.g. "collect_balls"

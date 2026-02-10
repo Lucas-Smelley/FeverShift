@@ -92,6 +92,8 @@ script = ExtResource("2_n8q0s")
 collect_balls_task = ExtResource("4_qdrnb")
 npc_id = "bueford"
 npc_name = "Bueford Sad Thing"
+pre_task_lines = Array[String](["please please please bring me 3 girl frogs"])
+post_task_lines = Array[String](["you  did this for mee?"])
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1775150501]
 sprite_frames = SubResource("SpriteFrames_hv1fa")

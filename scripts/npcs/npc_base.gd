@@ -4,7 +4,8 @@ class_name NpcBase
 @export var npc_id: String = ""
 @export var npc_name: String = ""
 @export var interactable: bool = true
-@export_multiline var dialogue_lines: Array[String] = []
+@export_multiline var pre_task_lines: Array[String] = []
+@export_multiline var post_task_lines: Array[String] = []
 
 @onready var interact_area: Area2D = $InteractArea
 @onready var interact_icon: AnimatedSprite2D = get_node_or_null("InteractIcon")
@@ -17,6 +18,8 @@ class_name NpcBase
 @export var char_delay := 0.02
 var is_typing := false
 var full_text := ""
+
+signal dialogue_advance
 
 
 func _ready() -> void:
@@ -46,9 +49,6 @@ func interact(player: Node) -> void:
 
 	player.start_npc_interaction(self)
 	set_icon_visible(false)
-
-	for line in dialogue_lines:
-		print("%s: %s" % [npc_name, line])
 
 	# Hook for child classes (Bueford, etc.)
 	on_interact(player)
@@ -97,6 +97,11 @@ func show_dialogue(text: String) -> void:
 
 	bubble_label.visible_characters = -1
 	is_typing = false
+	
+	if not speech_bubble.visible:
+		return
+	
+	await dialogue_advance
 
 func skip_typing() -> void:
 	is_typing = false

@@ -148,11 +148,13 @@ position = Vector2(85, 427)
 [node name="Ball" parent="." unique_id=2053026439 instance=ExtResource("8_gee14")]
 position = Vector2(173, 459)
 
-[node name="GirlFrog" parent="." unique_id=1671882071 instance=ExtResource("10_vtaks")]
+[node name="girlFrogs" type="Node2D" parent="." unique_id=1565721267]
+
+[node name="GirlFrog" parent="girlFrogs" unique_id=1671882071 instance=ExtResource("10_vtaks")]
 position = Vector2(694, 28)
 
-[node name="GirlFrog2" parent="." unique_id=972634408 instance=ExtResource("10_vtaks")]
+[node name="GirlFrog2" parent="girlFrogs" unique_id=972634408 instance=ExtResource("10_vtaks")]
 position = Vector2(1040, -14)
 
-[node name="GirlFrog3" parent="." unique_id=1109421417 instance=ExtResource("10_vtaks")]
+[node name="GirlFrog3" parent="girlFrogs" unique_id=1109421417 instance=ExtResource("10_vtaks")]
 position = Vector2(974, 418)

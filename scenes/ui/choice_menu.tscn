@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cfjpl8wujmis6"]
+
+[ext_resource type="Script" uid="uid://ignrsnaclvs8" path="res://scripts/ui/choice_menu.gd" id="1_g6leb"]
+
+[node name="ChoiceMenu" type="Control" unique_id=1493290778]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_g6leb")
+
+[node name="Panel" type="Panel" parent="." unique_id=1666048400]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1845997529]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

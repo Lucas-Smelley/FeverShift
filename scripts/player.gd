@@ -70,6 +70,10 @@ var locked_anim := ""
 var was_on_floor := false
 
 
+var active_choice_menu: ChoiceMenu = null
+
+
+
 func _ready() -> void:
 	# Set up input buffer timer
 	input_buffer = Timer.new()
@@ -173,7 +177,22 @@ func _physics_process(delta) -> void:
 				is_interacting_with.emit_signal("dialogue_advance")
 		else:
 			handle_interact()
+			
+	if active_choice_menu and active_choice_menu.is_active():
+		if Input.is_action_just_pressed("ui_up"):
+			active_choice_menu.nav_up()
+		elif Input.is_action_just_pressed("ui_down"):
+			active_choice_menu.nav_down()
+		elif Input.is_action_just_pressed("ui_accept"):
+			active_choice_menu.accept()
 
+
+func set_active_choice_menu(menu: ChoiceMenu) -> void:
+	active_choice_menu = menu
+
+func clear_active_choice_menu(menu: ChoiceMenu) -> void:
+	if active_choice_menu == menu:
+		active_choice_menu = null
 
 
 ## Returns the gravity based on the state of the player

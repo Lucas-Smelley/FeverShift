@@ -199,6 +199,7 @@ z_index = 11
 collision_layer = 2
 collision_mask = 85
 script = ExtResource("1_g2els")
+target_recalc_distance = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=833856917]
 sprite_frames = SubResource("SpriteFrames_3v2ag")
